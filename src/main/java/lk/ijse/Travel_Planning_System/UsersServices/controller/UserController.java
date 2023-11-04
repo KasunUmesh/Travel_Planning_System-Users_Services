@@ -31,7 +31,7 @@ public class UserController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE}, path = "/save")
-    UserDTO saveUser(@Valid
+    public Response saveUser(@Valid
                      @RequestPart String userName,
                      @RequestPart String address,
                      @RequestPart String email,
@@ -64,7 +64,8 @@ public class UserController {
         userDTO.setNicFImg(nicFImg);
         userDTO.setNicBImg(nicBImg);
 
-        return userService.saveUser(userDTO);
+        userService.saveUser(userDTO);
+        return new Response("Save Success", true, null);
 
     }
 
