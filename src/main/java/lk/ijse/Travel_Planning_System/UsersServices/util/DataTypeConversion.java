@@ -19,7 +19,7 @@ public class DataTypeConversion {
         return modelMapper.map(user, UserDTO.class);
     }
 
-    public User getAdminEntity(UserDTO userDTO) {
+    public User getUserEntity(UserDTO userDTO) {
         return modelMapper.map(userDTO, User.class);
     }
 }
