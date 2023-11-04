@@ -7,11 +7,14 @@ import lk.ijse.Travel_Planning_System.UsersServices.repository.UserRepo;
 import lk.ijse.Travel_Planning_System.UsersServices.service.UserService;
 import lk.ijse.Travel_Planning_System.UsersServices.util.DataTypeConversion;
 import lk.ijse.Travel_Planning_System.UsersServices.util.Response;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -26,6 +29,9 @@ public class UserServiceIMPL implements UserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    ModelMapper mapper;
 
     @Override
     public UserDTO saveUser(UserDTO userDTO) {
@@ -59,5 +65,10 @@ public class UserServiceIMPL implements UserService {
             return new Response("Email Not Valid", false, null);
         }
 
+    }
+
+    @Override
+    public List<UserDTO> getAllUser() {
+        return mapper.map(userRepo.findAll(), new TypeToken<List<UserDTO>>() {}.getType());
     }
 }

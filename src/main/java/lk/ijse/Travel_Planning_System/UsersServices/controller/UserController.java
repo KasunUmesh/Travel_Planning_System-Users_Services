@@ -2,10 +2,13 @@ package lk.ijse.Travel_Planning_System.UsersServices.controller;
 
 import jakarta.validation.Valid;
 import lk.ijse.Travel_Planning_System.UsersServices.dto.UserDTO;
+import lk.ijse.Travel_Planning_System.UsersServices.dto.UserLoginDTO;
 import lk.ijse.Travel_Planning_System.UsersServices.service.UserService;
+import lk.ijse.Travel_Planning_System.UsersServices.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
@@ -64,4 +67,19 @@ public class UserController {
         return userService.saveUser(userDTO);
 
     }
+
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public Response getAllUser() {
+        return new Response("Get All", true, userService.getAllUser());
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping(path = "/userlogin", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<?> loginUser(@Valid @RequestBody UserLoginDTO userLoginDTO) {
+
+        Response response = userService.loginUser(userLoginDTO);
+
+        return ResponseEntity.ok(response);
+    }
+
 }
